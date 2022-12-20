@@ -13,6 +13,7 @@ class MagasinTest {
         Item[] items = new Item[] { new Item("foo", 0, 0)};
         Magasin app = new Magasin(items);
         app.updateQuality();
+
         assertEquals("foo", app.items[0].name);
     }
 
@@ -23,17 +24,24 @@ class MagasinTest {
         Item[] items = new Item[] { new Item("Pass VIP Concert", 12, 20)};
         Magasin app = new Magasin(items);
         app.updateQuality(); // Output "Pass VIP Concert, 11, 21"
-        System.out.println(app.items[0]);
-        assertEquals("Pass VIP Concert, 11, 21", app.items[0].toString());
+        for (int i = 0; i < 3; i++){
+            app.updateQuality();
+            System.out.println(app.items[0]);
+        }
+        assertEquals("Pass VIP Concert, 8, 26", app.items[0].toString());
     }
     @Test
     // 2) SpellIn entre 10 et 6 == Quality +2
     void testPassVIPSellInIs10QualityIs20() {
-        Item[] items = new Item[] { new Item("Pass VIP Concert", 10, 20)};
+        Item[] items = new Item[] { new Item("Pass VIP Concert", 9, 20)};
         Magasin app = new Magasin(items);
         app.updateQuality(); // Output "Pass VIP Concert, 9, 22"
-        System.out.println(app.items[0]);
-        assertEquals("Pass VIP Concert, 9, 22", app.items[0].toString());
+
+        for (int i = 0; i < 3; i++){
+            app.updateQuality();
+            System.out.println(app.items[0]);
+        }
+        assertEquals("Pass VIP Concert, 5, 28", app.items[0].toString());
     }
 
     @Test
@@ -42,8 +50,11 @@ class MagasinTest {
         Item[] items = new Item[] { new Item("Pass VIP Concert", 5, 20)};
         Magasin app = new Magasin(items);
         app.updateQuality(); // Output "Pass VIP Concert, 4, 23"
-        System.out.println(app.items[0]);
-        assertEquals("Pass VIP Concert, 4, 23", app.items[0].toString());
+        for (int i = 0; i < 3; i++){
+            app.updateQuality();
+            System.out.println(app.items[0]);
+        }
+        assertEquals("Pass VIP Concert, 1, 32", app.items[0].toString());
     }
 
     @Test
@@ -52,8 +63,11 @@ class MagasinTest {
         Item[] items = new Item[] { new Item("Pass VIP Concert", 0, 20)};
         Magasin app = new Magasin(items);
         app.updateQuality(); // Output "Pass VIP Concert, -1, 0"
-        System.out.println(app.items[0]);
-        assertEquals("Pass VIP Concert, -1, 0", app.items[0].toString());
+        for (int i = 0; i < 3; i++){
+            app.updateQuality();
+            System.out.println(app.items[0]);
+        }
+        assertEquals("Pass VIP Concert, -4, 0", app.items[0].toString());
     }
 
     @Test
@@ -62,8 +76,11 @@ class MagasinTest {
         Item[] items = new Item[] {new Item("Patate", 0, 10)};
         Magasin app = new Magasin(items);
         app.updateQuality();
-        System.out.println(app.items[0]);
-        assertEquals("Patate, -1, 8", app.items[0].toString());
+        for (int i = 0; i < 3; i++){
+            app.updateQuality();
+            System.out.println(app.items[0]);
+        }
+        assertEquals("Patate, -4, 2", app.items[0].toString());
     }
 
     @Test
@@ -78,4 +95,50 @@ class MagasinTest {
         }
         assertEquals("Comté, 7, 50", app.items[0].toString());
     }
+
+    @Test
+    void testItemComteQualityinferior0(){
+        Item[] items = new Item[] {new Item("Comté", -1, 30)};
+        Magasin app = new Magasin(items);
+        for (int i = 0; i < 5; i++){
+            app.updateQuality();
+            System.out.println(app.items[0]);
+        }
+        assertEquals("Comté, -6, 40", app.items[0].toString());
+    }
+    @Test
+    void testKryptonitesup0(){
+        Item[] items = new Item[] {new Item("kryptonite", -1, 30)};
+        Magasin app = new Magasin(items);
+        for (int i = 0; i < 5; i++){
+            app.updateQuality();
+            System.out.println(app.items[0]);
+        }
+        assertEquals("kryptonite, -6, 20", app.items[0].toString());
+    }
+    @Test
+    void testpouvoirsup0(){
+        Item[] items = new Item[] {new Item("pouvoir magique", 3, 30)};
+        Magasin app = new Magasin(items);
+            app.updateQuality();
+
+
+        assertEquals("pouvoir magique, 2, 28", app.items[0].toString());
+    }
+    @Test
+    void testpouvoirinf0(){
+        Item[] items = new Item[] {new Item("pouvoir magique", 0, 30)};
+        Magasin app = new Magasin(items);
+        app.updateQuality();
+
+
+        assertEquals("pouvoir magique, -1, 26", app.items[0].toString());
+    }
+
+
+
+
+
+
+
 }
